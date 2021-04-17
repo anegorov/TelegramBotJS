@@ -12,7 +12,6 @@ const { enter, leave } = Scenes.Stage
 
 const stepHandler = new Composer()
 stepHandler.action('tool', async (ctx) => {
-
   await ctx.reply('Enter tool name')
   return ctx.wizard.next()
 });
@@ -84,6 +83,21 @@ bot.use((ctx, next) => {
 })
 bot.command('greeter', (ctx) => ctx.scene.enter('greeter'))
 bot.command('echo', (ctx) => ctx.scene.enter('echo'))
+
+bot.command('create', (ctx) =>
+  ctx.reply('One time keyboard', Markup
+    .keyboard([
+      ['🔍 Location', '😎 Person'],
+      ['☸ Tool', '📞 Feedback'] 
+    ])
+    .oneTime()
+    .resize()
+  )
+)
+
+bot.hears('🔍 Location', ctx => ctx.scene.enter('new-location'))
+bot.hears('☸ Tool', ctx => ctx.scene.enter('new-tool'))
+
 bot.command('new', (ctx) => {
   ctx.reply(
     'What to create?',
@@ -101,7 +115,12 @@ bot.on('callback_query', (ctx) => {
   if(ctx.callbackQuery.data === 'new-location') ctx.scene.enter('new-location');
   ctx.telegram.answerCbQuery(ctx.callbackQuery.id)
 });
-bot.on('message', (ctx) => ctx.reply('Try /echo or /greeter or /new'))
+bot.on('message', (ctx) => {
+  ctx.reply('Try /echo or /greeter or /new')
+});
+
+bot.on('📢 Ads', (ctx) => ctx.reply('Try /echo or /greeter or /new'));
+
 bot.launch()
 
 console.log('Bot is started!')
