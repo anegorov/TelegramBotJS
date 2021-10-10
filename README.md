@@ -4,6 +4,8 @@ npm i dotenv
 
 https://www.npmjs.com/package/telegraf
 
+https://github.com/telegraf/telegraf/tree/develop/docs/examples
+
 ## Core functions
 
 1. Tools
@@ -16,3 +18,7 @@ https://www.npmjs.com/package/telegraf
    - Edit
    - Delete
    - Search
+
+## To Run app
+
+node wizard-extended-bot
